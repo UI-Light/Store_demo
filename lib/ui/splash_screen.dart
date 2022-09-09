@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:store_demo/ui/welcome_screen.dart';
 
@@ -94,7 +93,17 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
-    controller.forward();
+    Future.delayed(
+      const Duration(seconds: 0),
+    ).then(
+      (value) => controller.forward().whenComplete(
+            () => Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => const WelcomeScreen(),
+              ),
+            ),
+          ),
+    );
   }
 
   @override
@@ -149,7 +158,7 @@ class _SplashScreenState extends State<SplashScreen>
                 child: Container(
                   decoration: BoxDecoration(
                       color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20.0),
                         bottomRight: Radius.circular(20.0),
                       )),
@@ -163,20 +172,8 @@ class _SplashScreenState extends State<SplashScreen>
                       ),
                     ),
                   ),
-                ), //Image.asset('assets/images/Rectangle-47.png')
+                ),
               ),
-              // Positioned(
-              //   bottom: 260.0,
-              //   left: 130.0,
-              //   child: Text(
-              //     'Fruit Hub',
-              //     style: GoogleFonts.badScript(
-              //       fontSize: 24,
-              //       color: Colors.black,
-              //       fontWeight: FontWeight.w400,
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),

@@ -60,8 +60,16 @@ flutter:
   fonts:
     - family: BrandonGrotesque
       fonts:
+        - asset: assets/fonts/Brandon_bld.otf
+        - asset: assets/fonts/Brandon_light.otf
+        - asset: assets/fonts/Brandon_med.otf
+        - asset: assets/fonts/Brandon_reg.otf
+        - asset: assets/fonts/Brandon_thin.otf
         - asset: assets/fonts/brandon-grotesque-black-58a8a3e824392.otf
         - asset: assets/fonts/brandon-grotesque-light-58a8a4b38001d.otf
+        
+
+          
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:
