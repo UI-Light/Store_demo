@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:store_demo/shared/textfield.dart';
+import 'package:store_demo/ui/products_screen.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   const AuthenticationScreen({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         body: Column(
           children: [
             Container(
@@ -39,34 +40,41 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'What is your firstname?',
+                        'What is your Username?',
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w400,
                             color: Color(0xff27214D)),
                       ),
-                      const SizedBox(height: 20),
-                      TextfieldWidget(),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 10),
+                      const TextfieldWidget(
+                        hintText: 'Tony',
+                      ),
+                      const SizedBox(height: 10),
                       const Text(
-                        'What is your email?',
+                        'Enter your password',
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w400,
                             color: Color(0xff27214D)),
                       ),
-                      SizedBox(height: 20),
-                      TextfieldWidget(),
+                      const SizedBox(height: 10),
+                      const TextfieldWidget(hintText: 'Password'),
                       const SizedBox(height: 30),
-                      Container(
-                        height: MediaQuery.of(context).size.height / 14,
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: ((context) => ProductsScreen())));
+                        },
+                        child: Container(
+                          height: MediaQuery.of(context).size.height / 14,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                            color: Theme.of(context).primaryColor,
                           ),
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        child: GestureDetector(
                           child: Center(
                               child: Text(
                             'Start Ordering',

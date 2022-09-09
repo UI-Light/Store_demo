@@ -46,7 +46,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   const Text(
                     'We deliver the best and freshest fruit salad in town. Order for a combo today!!!',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 17,
                       color: Color(0xff5D577E),
                       fontWeight: FontWeight.w400,
                     ),

@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 
 class TextfieldWidget extends StatelessWidget {
-  const TextfieldWidget({Key? key}) : super(key: key);
+  final String hintText;
+
+  const TextfieldWidget({Key? key, required this.hintText}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       height: MediaQuery.of(context).size.height / 15,
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
         color: Color(0xffF3F1F1),
       ),
       child: TextFormField(
-        decoration: const InputDecoration(
-          hintText: 'Tony',
-          hintStyle: TextStyle(
+        decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: const TextStyle(
             fontSize: 20,
             color: Color(0xffC2BDBD),
             fontWeight: FontWeight.w400,
