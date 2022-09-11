@@ -12,7 +12,7 @@ class TextfieldWidget extends StatelessWidget {
       height: MediaQuery.of(context).size.height / 15,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Color(0xffF3F1F1),
+        color: const Color(0xffF3F1F1),
       ),
       child: TextFormField(
         decoration: InputDecoration(

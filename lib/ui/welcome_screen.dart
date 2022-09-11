@@ -38,9 +38,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   const Text(
                     'Get The Freshest Fruit Salad Combo',
                     style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xff27214D)),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                   const SizedBox(height: 20),
                   const Text(

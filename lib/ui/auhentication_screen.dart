@@ -42,9 +42,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                       const Text(
                         'What is your Username?',
                         style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xff27214D)),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                       const SizedBox(height: 10),
                       const TextfieldWidget(
@@ -54,9 +54,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                       const Text(
                         'Enter your password',
                         style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xff27214D)),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                       const SizedBox(height: 10),
                       const TextfieldWidget(hintText: 'Password'),
@@ -65,7 +65,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                         onTap: () {
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                  builder: ((context) => ProductsScreen())));
+                                  builder: ((context) =>
+                                      const ProductsScreen())));
                         },
                         child: Container(
                           height: MediaQuery.of(context).size.height / 14,
