@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:store_demo/ui/product_detail_screen.dart';
 
 class ComboGrid extends StatefulWidget {
   final String productName;
@@ -47,7 +48,15 @@ class _ComboGridState extends State<ComboGrid> {
               ),
             ),
           ),
-          Center(child: Image.asset(widget.productImage)),
+          Center(
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: ((context) => const ProductDetailScreen())));
+              },
+              child: Image.asset(widget.productImage),
+            ),
+          ),
           Text(
             widget.productName,
             style: const TextStyle(
@@ -80,7 +89,7 @@ class _ComboGridState extends State<ComboGrid> {
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );

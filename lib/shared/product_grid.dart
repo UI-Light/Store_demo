@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:store_demo/ui/product_detail_screen.dart';
 
 class ProductGrid extends StatefulWidget {
   final String productName;
@@ -19,7 +20,7 @@ class _ProductGridState extends State<ProductGrid> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 8),
+      margin: const EdgeInsets.only(right: 8),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
       height: MediaQuery.of(context).size.height / 5,
       width: MediaQuery.of(context).size.width / 2.3,
@@ -48,7 +49,13 @@ class _ProductGridState extends State<ProductGrid> {
               ),
             ),
           ),
-          Center(child: Image.asset(widget.productImage)),
+          Center(
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: ((context) => const ProductDetailScreen())));
+                  },
+                  child: Image.asset(widget.productImage))),
           Text(
             widget.productName,
             style: const TextStyle(

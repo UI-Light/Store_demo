@@ -88,7 +88,7 @@ class ProductsScreen extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () {},
-                    child: Text(
+                    child: const Text(
                       'Hottest',
                       style: TextStyle(
                         color: Color(0xff27214D),
@@ -98,7 +98,7 @@ class ProductsScreen extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {},
-                    child: Text(
+                    child: const Text(
                       'Popular',
                       style: TextStyle(
                         color: Color(0xff938DB5),
@@ -108,7 +108,7 @@ class ProductsScreen extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {},
-                    child: Text(
+                    child: const Text(
                       'New Combo',
                       style: TextStyle(
                         color: Color(0xff938DB5),
@@ -119,7 +119,7 @@ class ProductsScreen extends StatelessWidget {
                   Expanded(
                     child: TextButton(
                       onPressed: () {},
-                      child: Text(
+                      child: const Text(
                         'Top',
                         style: TextStyle(
                           color: Color(0xff938DB5),
@@ -130,11 +130,11 @@ class ProductsScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: [
+                  children: const [
                     ProductGrid(
                         productName: 'Quinoa fruit salad',
                         productImage: 'assets/images/quinoa-and-red.png',
