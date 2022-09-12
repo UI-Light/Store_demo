@@ -27,9 +27,9 @@ class _ComboGridState extends State<ComboGrid> {
         boxShadow: const [
           BoxShadow(
             color: Color.fromRGBO(32, 32, 32, 0.05),
-            spreadRadius: 2,
+            spreadRadius: 1,
             blurRadius: 7,
-            offset: Offset(0, 0),
+            //offset: Offset(0, 0),
           ),
         ],
         color: Colors.white,
