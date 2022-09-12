@@ -15,6 +15,7 @@ class TextfieldWidget extends StatelessWidget {
         color: const Color(0xffF3F1F1),
       ),
       child: TextFormField(
+        cursorColor: Theme.of(context).primaryColor,
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: const TextStyle(

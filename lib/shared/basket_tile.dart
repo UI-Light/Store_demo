@@ -48,7 +48,7 @@ class _BasketTileState extends State<BasketTile> {
             width: 12,
           ),
 
-          //TODO: Fix icon Ize
+          //TODO: Fix icon Size
           Container(
             height: 24,
             width: 25,

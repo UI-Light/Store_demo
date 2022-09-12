@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:store_demo/shared/basket_tile.dart';
+import 'package:store_demo/shared/checkout_bottom_sheet.dart';
 import 'package:store_demo/ui/my_basket_screen.dart';
 
 class MyBasketScreen extends StatefulWidget {
@@ -16,6 +17,7 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: const Color(0xffFFFFFF),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +108,14 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                     ],
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      showModalBottomSheet(
+                          context: context,
+                          backgroundColor: Colors.transparent,
+                          builder: (context) {
+                            return const CheckoutBottomSheet();
+                          });
+                    },
                     child: Container(
                       height: MediaQuery.of(context).size.height / 14,
                       width: MediaQuery.of(context).size.width / 2,
