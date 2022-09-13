@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:store_demo/shared/textfield.dart';
-import 'package:store_demo/ui/products_screen.dart';
+import 'package:store_demo/ui/shared/textfield.dart';
+import 'package:store_demo/ui/views/products_screen.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   const AuthenticationScreen({Key? key}) : super(key: key);

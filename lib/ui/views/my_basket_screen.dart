@@ -1,9 +1,9 @@
 // ignore_for_file: unused_import, unnecessary_const
 
 import 'package:flutter/material.dart';
-import 'package:store_demo/shared/basket_tile.dart';
-import 'package:store_demo/shared/checkout_bottom_sheet.dart';
-import 'package:store_demo/ui/my_basket_screen.dart';
+import 'package:store_demo/ui/shared/basket_tile.dart';
+import 'package:store_demo/ui/shared/checkout_bottom_sheet.dart';
+import 'package:store_demo/ui/views/my_basket_screen.dart';
 
 class MyBasketScreen extends StatefulWidget {
   const MyBasketScreen({Key? key}) : super(key: key);
@@ -127,7 +127,7 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                       ),
                       child: Center(
                         child: Text(
-                          'Add to basket',
+                          'Checkout',
                           style: TextStyle(
                               fontSize: 16,
                               color: Theme.of(context).colorScheme.onPrimary),

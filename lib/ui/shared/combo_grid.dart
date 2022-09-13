@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:store_demo/ui/product_detail_screen.dart';
+import 'package:store_demo/models/product.dart';
 
 class ComboGrid extends StatefulWidget {
-  final String productName;
-  final String productImage;
-  final String price;
+  // final String productName;
+  // final String productImage;
+  // final int price;
+  // const ComboGrid({
+  //   Key? key,
+  //   required this.productName,
+  //   required this.productImage,
+  //   required this.price,
+  // }) : super(key: key);
+
+  final Product product;
   const ComboGrid({
     Key? key,
-    required this.productName,
-    required this.productImage,
-    required this.price,
+    required this.product,
   }) : super(key: key);
 
   @override
@@ -17,9 +23,41 @@ class ComboGrid extends StatefulWidget {
 }
 
 class _ComboGridState extends State<ComboGrid> {
+  bool _isFav = false;
+  int _counter = 0;
+  late int _price;
+
+  bool get isFav => _isFav;
+  int get counter => _counter;
+  int get price => _price;
+
+  void toggleIsFav() {
+    setState(() {
+      _isFav = !_isFav;
+    });
+  }
+
+  void incrementCounter(int price) {
+    setState(() {
+      _counter++;
+      _price = price * _counter;
+    });
+  }
+
+  void decrementCounter() {
+    if (_counter == 0) {
+      setState(() {
+        _counter = 0;
+      });
+    } else {
+      _counter--;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(right: 8),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
       height: MediaQuery.of(context).size.height / 4,
       width: MediaQuery.of(context).size.width / 2.3,
@@ -42,25 +80,25 @@ class _ComboGridState extends State<ComboGrid> {
             child: Container(
               alignment: Alignment.topRight,
               child: IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.favorite_outline),
+                onPressed: () {
+                  toggleIsFav();
+                },
+                icon: isFav
+                    ? const Icon(Icons.favorite)
+                    : const Icon(Icons.favorite_outline),
                 color: Theme.of(context).primaryColor,
               ),
             ),
           ),
           Center(
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: ((context) => const ProductDetailScreen())));
-              },
-              child: Image.asset(widget.productImage),
-            ),
+            child: Image.asset(widget.product.productImage),
           ),
-          Text(
-            widget.productName,
-            style: const TextStyle(
-              fontSize: 16,
+          FittedBox(
+            child: Text(
+              widget.product.productName,
+              style: const TextStyle(
+                fontSize: 16,
+              ),
             ),
           ),
           const SizedBox(height: 2),
@@ -68,7 +106,7 @@ class _ComboGridState extends State<ComboGrid> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '\$${widget.price}',
+                '\$${widget.product.price}',
                 style: const TextStyle(fontSize: 14, color: Color(0xffF08626)),
               ),
               Container(
@@ -79,7 +117,9 @@ class _ComboGridState extends State<ComboGrid> {
                     borderRadius: BorderRadius.circular(30)),
                 child: Center(
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      incrementCounter(widget.product.price);
+                    },
                     icon: const Icon(
                       Icons.add,
                     ),

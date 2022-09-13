@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:store_demo/ui/track_order_screen.dart';
+import 'package:store_demo/ui/views/track_order_screen.dart';
 
 class CongratulationScreen extends StatelessWidget {
   const CongratulationScreen({Key? key}) : super(key: key);

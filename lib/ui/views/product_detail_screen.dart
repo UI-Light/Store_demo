@@ -1,14 +1,68 @@
 import 'package:flutter/material.dart';
-import 'package:store_demo/ui/my_basket_screen.dart';
+import 'package:store_demo/models/product.dart';
+import 'package:store_demo/ui/views/my_basket_screen.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  const ProductDetailScreen({Key? key}) : super(key: key);
+  final Product product;
+  const ProductDetailScreen({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  bool _isFav = false;
+  int _counter = 0;
+  late int _price;
+
+  bool get isFav => _isFav;
+  int get counter => _counter;
+  int get price => _price;
+
+  void toggleIsFav() {
+    setState(() {
+      _isFav = !_isFav;
+    });
+  }
+
+  void incrementCounter() {
+    setState(() {
+      _counter++;
+      // if (_counter == 0 || _counter == 1) {
+      //   _price = productPrice;
+      // } else {
+      //   _price = productPrice * _counter;
+      // }
+    });
+  }
+
+  void decrementCounter() {
+    if (_counter == 0) {
+      setState(() {
+        _counter = 0;
+      });
+    } else {
+      setState(() {
+        _counter--;
+      });
+    }
+  }
+
+  // void changePrice(int productPrice) {
+  //   if (_counter == 0 || _counter == 1) {
+  //     setState(() {
+  //       _price = productPrice;
+  //     });
+  //   } else {
+  //     setState(() {
+  //       _price = productPrice * _counter;
+  //     });
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -43,7 +97,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
               Center(
                 child: Image.asset(
-                  'assets/images/breakfast-quinoa.png',
+                  widget.product.productImage,
                 ),
               ),
               Expanded(
@@ -61,8 +115,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Quinoa Fruit Salad',
+                        Text(
+                          '${widget.product.productName}',
                           style: TextStyle(
                             fontSize: 32,
                           ),
@@ -74,7 +128,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           children: [
                             Center(
                               child: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  decrementCounter();
+                                },
                                 icon: const Icon(Icons.remove_circle_outline),
                                 color: const Color(0xff333333),
                                 iconSize: 32,
@@ -83,9 +139,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             const SizedBox(
                               width: 8,
                             ),
-                            const Text(
-                              '1',
-                              style: TextStyle(
+                            Text(
+                              '$counter',
+                              style: const TextStyle(
                                   fontSize: 24, color: Color(0xff27214D)),
                             ),
                             const SizedBox(
@@ -100,7 +156,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               ),
                               child: Center(
                                 child: IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    incrementCounter();
+                                  },
                                   icon: const Icon(
                                     Icons.add,
                                   ),
@@ -112,9 +170,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             const SizedBox(
                               width: 120,
                             ),
-                            const Text(
+                            Text(
                               '\$2,000',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 24, color: Color(0xff27214D)),
                             ),
                           ],
@@ -136,8 +194,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         const SizedBox(
                           height: 15,
                         ),
-                        const Text(
-                          'Red Quinoa, Lime, Honey, Blueberries, Strawberries, Mango, Fresh mint.',
+                        Text(
+                          '${widget.product.description}',
                           style: TextStyle(
                             fontSize: 18,
                           ),

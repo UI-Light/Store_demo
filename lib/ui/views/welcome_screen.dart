@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:store_demo/ui/auhentication_screen.dart';
+import 'package:store_demo/ui/views/auhentication_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);

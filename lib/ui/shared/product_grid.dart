@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:store_demo/ui/product_detail_screen.dart';
+import 'package:store_demo/models/product.dart';
 
 class ProductGrid extends StatefulWidget {
-  final String productName;
-  final String productImage;
-  final String price;
+  // final String productName;
+  // final String productImage;
+  // final int price;
+  // const ProductGrid({
+  //   Key? key,
+  //   required this.productName,
+  //   required this.productImage,
+  //   required this.price,
+  // }) : super(key: key);
+
+  final Product product;
   const ProductGrid({
     Key? key,
-    required this.productName,
-    required this.productImage,
-    required this.price,
+    required this.product,
   }) : super(key: key);
 
   @override
@@ -50,16 +56,14 @@ class _ProductGridState extends State<ProductGrid> {
             ),
           ),
           Center(
-              child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: ((context) => const ProductDetailScreen())));
-                  },
-                  child: Image.asset(widget.productImage))),
-          Text(
-            widget.productName,
-            style: const TextStyle(
-              fontSize: 16,
+            child: Image.asset(widget.product.productImage),
+          ),
+          FittedBox(
+            child: Text(
+              widget.product.productName,
+              style: const TextStyle(
+                fontSize: 16,
+              ),
             ),
           ),
           const SizedBox(height: 2),
@@ -67,7 +71,7 @@ class _ProductGridState extends State<ProductGrid> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '\$${widget.price}',
+                '\$${widget.product.price}',
                 style: const TextStyle(fontSize: 14, color: Color(0xffF08626)),
               ),
               Container(

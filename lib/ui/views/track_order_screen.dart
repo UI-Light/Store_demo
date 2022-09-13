@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:store_demo/shared/order_status_tile.dart';
+import 'package:store_demo/ui/shared/order_status_tile.dart';
 
 class TrackOrderScreen extends StatefulWidget {
   const TrackOrderScreen({Key? key}) : super(key: key);
@@ -73,8 +73,9 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                   child: ListView(
                     children: const [
                       OrderStatusTile(
-                          image: 'assets/images/orders.png',
-                          status: 'Order Taken'),
+                        image: 'assets/images/orders.png',
+                        status: 'Order Taken',
+                      ),
                       OrderStatusTile(
                           image: 'assets/images/prepare_order.png',
                           status: 'Order Is Being Prepared'),
