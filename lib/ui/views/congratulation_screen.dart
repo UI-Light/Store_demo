@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:store_demo/ui/views/products_screen.dart';
 import 'package:store_demo/ui/views/track_order_screen.dart';
 
 class CongratulationScreen extends StatelessWidget {
@@ -68,21 +69,27 @@ class CongratulationScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            Container(
-              height: MediaQuery.of(context).size.height / 12,
-              width: MediaQuery.of(context).size.width / 2,
-              decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Theme.of(context).primaryColor,
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(15)),
-              child: Center(
-                child: Text(
-                  'Continue Shopping',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).primaryColor,
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const ProductsScreen()));
+              },
+              child: Container(
+                height: MediaQuery.of(context).size.height / 12,
+                width: MediaQuery.of(context).size.width / 2,
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Theme.of(context).primaryColor,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(15)),
+                child: Center(
+                  child: Text(
+                    'Continue Shopping',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
                 ),
               ),
