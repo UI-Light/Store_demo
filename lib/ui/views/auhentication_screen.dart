@@ -82,6 +82,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                         onTap: () async {
                           var username = usernameController.text;
                           var password = passwordController.text;
+
+                          print('usernameController: $username');
+                          print('passwordcontroller: $password');
                           var jwt = await httpService.login(username, password);
                           if (jwt != null) {
                             storage.write(key: "jwt", value: jwt);

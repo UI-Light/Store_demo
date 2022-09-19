@@ -5,7 +5,7 @@ import 'package:store_demo/ui/shared/product_grid.dart';
 import 'package:store_demo/ui/shared/search_field.dart';
 import 'package:store_demo/ui/views/my_basket_screen.dart';
 import 'package:store_demo/ui/views/product_detail_screen.dart';
-import 'dart:convert' show json, base64, ascii, utf8;
+import 'dart:convert' show json, base64, utf8;
 
 class ProductsScreen extends StatelessWidget {
   final String jwt;
