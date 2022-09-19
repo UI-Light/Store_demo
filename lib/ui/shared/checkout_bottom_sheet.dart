@@ -14,6 +14,8 @@ class CheckoutBottomSheet extends StatefulWidget {
 }
 
 class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
+  TextEditingController controller = TextEditingController();
+
   String publicKeyTest = 'pk_test_6972397d1bd678cd6e73da062b27c388f6aa99b0';
 
   final plugin = PaystackPlugin();
@@ -93,7 +95,8 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
             ),
           ),
           const SizedBox(height: 10),
-          const TextfieldWidget(
+          TextfieldWidget(
+            controller: controller,
             hintText: '10th avenue, Lekki, Lagos State',
           ),
           const SizedBox(height: 15),
@@ -105,7 +108,8 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
             ),
           ),
           const SizedBox(height: 10),
-          const TextfieldWidget(
+          TextfieldWidget(
+            controller: controller,
             hintText: '09090605708',
           ),
           const SizedBox(height: 15),
@@ -117,7 +121,8 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
             ),
           ),
           const SizedBox(height: 10),
-          const TextfieldWidget(
+          TextfieldWidget(
+            controller: controller,
             hintText: 'jane@gmail.com',
           ),
           const SizedBox(height: 20),

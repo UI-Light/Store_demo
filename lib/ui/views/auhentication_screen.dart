@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:store_demo/ui/shared/textfield.dart';
+import 'package:store_demo/data/http_service.dart';
 import 'package:store_demo/ui/views/products_screen.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   const AuthenticationScreen({Key? key}) : super(key: key);
@@ -10,6 +12,17 @@ class AuthenticationScreen extends StatefulWidget {
 }
 
 class _AuthenticationScreenState extends State<AuthenticationScreen> {
+  HttpService httpService = HttpService();
+  final storage = const FlutterSecureStorage();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  void displayDialog(context, title, text) => showDialog(
+        context: context,
+        builder: (context) =>
+            AlertDialog(title: Text(title), content: Text(text)),
+      );
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -47,8 +60,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      const TextfieldWidget(
+                      TextfieldWidget(
                         hintText: 'Tony',
+                        controller: usernameController,
                       ),
                       const SizedBox(height: 10),
                       const Text(
@@ -59,14 +73,26 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      const TextfieldWidget(hintText: 'Password'),
+                      TextfieldWidget(
+                        hintText: 'Password',
+                        controller: passwordController,
+                      ),
                       const SizedBox(height: 30),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: ((context) =>
-                                      const ProductsScreen())));
+                        onTap: () async {
+                          var username = usernameController.text;
+                          var password = passwordController.text;
+                          var jwt = await httpService.login(username, password);
+                          if (jwt != null) {
+                            storage.write(key: "jwt", value: jwt);
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ProductsScreen.fromBase64(jwt)));
+                          } else {
+                            displayDialog(context, "An Error Occurred",
+                                "No account was found matching that username and password");
+                          }
                         },
                         child: Container(
                           height: MediaQuery.of(context).size.height / 14,

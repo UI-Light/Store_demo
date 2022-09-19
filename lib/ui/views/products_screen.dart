@@ -5,12 +5,28 @@ import 'package:store_demo/ui/shared/product_grid.dart';
 import 'package:store_demo/ui/shared/search_field.dart';
 import 'package:store_demo/ui/views/my_basket_screen.dart';
 import 'package:store_demo/ui/views/product_detail_screen.dart';
+import 'dart:convert' show json, base64, ascii, utf8;
 
 class ProductsScreen extends StatelessWidget {
+  final String jwt;
+  final Map? payload;
+
   const ProductsScreen({
     Key? key,
+    required this.jwt,
+    this.payload,
   }) : super(key: key);
 
+  factory ProductsScreen.fromBase64(String jwt) {
+    return ProductsScreen(
+      jwt: jwt,
+      payload: json.decode(
+        utf8.decode(
+          base64.decode(base64.normalize(jwt.split(".")[1])),
+        ),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     List<Product> temporaryProducts = [
@@ -50,7 +66,7 @@ class ProductsScreen extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => MyBasketScreen()));
+                              builder: (context) => const MyBasketScreen()));
                         },
                         child: Image.asset(
                           'assets/images/mybasket.png',

@@ -71,8 +71,8 @@ class CongratulationScreen extends StatelessWidget {
             const SizedBox(height: 30),
             GestureDetector(
               onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const ProductsScreen()));
+                // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                //     builder: (context) =>  ProductsScreen(jwt: jwt,)));
               },
               child: Container(
                 height: MediaQuery.of(context).size.height / 12,

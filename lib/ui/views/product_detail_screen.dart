@@ -117,7 +117,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       children: [
                         Text(
                           '${widget.product.productName}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 32,
                           ),
                         ),
@@ -170,9 +170,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             const SizedBox(
                               width: 120,
                             ),
-                            Text(
+                            const Text(
                               '\$2,000',
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontSize: 24, color: Color(0xff27214D)),
                             ),
                           ],
@@ -196,7 +196,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                         Text(
                           '${widget.product.description}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                           ),
                         ),
