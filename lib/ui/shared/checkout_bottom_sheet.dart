@@ -58,7 +58,6 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
 
     //check if the response is true or not
     if (response.status == true) {
-      //you can send some data from the response to an API or use webhook to record the payment on a database
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: ((context) => const CongratulationScreen()),
@@ -66,7 +65,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
       );
     } else {
       //the payment wasn't successsful or the user cancelled the payment
-      _showMessage('Payment Failed!!!');
+      _showMessage('Payment Failed');
     }
   }
 
@@ -98,6 +97,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
           TextfieldWidget(
             controller: controller,
             hintText: '10th avenue, Lekki, Lagos State',
+            obscureText: false,
           ),
           const SizedBox(height: 15),
           const Text(
@@ -111,6 +111,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
           TextfieldWidget(
             controller: controller,
             hintText: '09090605708',
+            obscureText: false,
           ),
           const SizedBox(height: 15),
           const Text(
@@ -124,6 +125,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
           TextfieldWidget(
             controller: controller,
             hintText: 'jane@gmail.com',
+            obscureText: false,
           ),
           const SizedBox(height: 20),
           Expanded(

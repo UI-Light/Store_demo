@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:store_demo/ui/views/products_screen.dart';
 import 'package:store_demo/ui/views/track_order_screen.dart';
 
-class CongratulationScreen extends StatelessWidget {
+class CongratulationScreen extends StatefulWidget {
   const CongratulationScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CongratulationScreen> createState() => _CongratulationScreenState();
+}
+
+class _CongratulationScreenState extends State<CongratulationScreen> {
+  late String jwt;
+  final storage = const FlutterSecureStorage();
+  Future get jwtOrEmpty async {
+    var jwt = await storage.read(key: "jwt");
+    if (jwt == null) return "";
+    return jwt;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +85,8 @@ class CongratulationScreen extends StatelessWidget {
             const SizedBox(height: 30),
             GestureDetector(
               onTap: () {
-                // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                //     builder: (context) =>  ProductsScreen(jwt: jwt,)));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => ProductsScreen.fromBase64(jwt)));
               },
               child: Container(
                 height: MediaQuery.of(context).size.height / 12,

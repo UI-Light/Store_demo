@@ -97,8 +97,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
               Center(
                 child: Image.asset(
-                  widget.product.productImage,
-                ),
+                    //widget.product.productImage,
+                    'assets/images/breakfast-quinoa.png'),
               ),
               Expanded(
                 child: Container(
@@ -116,7 +116,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${widget.product.productName}',
+                          widget.product.productName,
                           style: const TextStyle(
                             fontSize: 32,
                           ),
@@ -195,7 +195,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           height: 15,
                         ),
                         Text(
-                          '${widget.product.description}',
+                          widget.product.description,
                           style: const TextStyle(
                             fontSize: 18,
                           ),

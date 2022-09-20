@@ -25,11 +25,11 @@ class ComboGrid extends StatefulWidget {
 class _ComboGridState extends State<ComboGrid> {
   bool _isFav = false;
   int _counter = 0;
-  late int _price;
+  late double _price;
 
   bool get isFav => _isFav;
   int get counter => _counter;
-  int get price => _price;
+  double get price => _price;
 
   void toggleIsFav() {
     setState(() {
@@ -37,7 +37,7 @@ class _ComboGridState extends State<ComboGrid> {
     });
   }
 
-  void incrementCounter(int price) {
+  void incrementCounter(double price) {
     setState(() {
       _counter++;
       _price = price * _counter;

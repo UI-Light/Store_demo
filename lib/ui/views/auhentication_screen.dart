@@ -63,6 +63,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                       TextfieldWidget(
                         hintText: 'Tony',
                         controller: usernameController,
+                        obscureText: false,
                       ),
                       const SizedBox(height: 10),
                       const Text(
@@ -76,6 +77,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                       TextfieldWidget(
                         hintText: 'Password',
                         controller: passwordController,
+                        obscureText: true,
                       ),
                       const SizedBox(height: 30),
                       GestureDetector(
@@ -83,11 +85,11 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                           var username = usernameController.text;
                           var password = passwordController.text;
 
-                          print('usernameController: $username');
-                          print('passwordcontroller: $password');
                           var jwt = await httpService.login(username, password);
+
                           if (jwt != null) {
                             storage.write(key: "jwt", value: jwt);
+
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (context) =>
