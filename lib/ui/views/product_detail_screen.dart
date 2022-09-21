@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:store_demo/models/basket.dart';
+
 import 'package:store_demo/models/product.dart';
 import 'package:store_demo/ui/views/my_basket_screen.dart';
 
@@ -14,9 +16,13 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  Basket basket = Basket();
+
   bool _isFav = false;
   int _counter = 0;
+
   late int _price;
+  double totalAmount = 0.0;
 
   bool get isFav => _isFav;
   int get counter => _counter;
@@ -31,6 +37,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   void incrementCounter() {
     setState(() {
       _counter++;
+
+      totalAmount = basket.totalAmount();
+
       // if (_counter == 0 || _counter == 1) {
       //   _price = productPrice;
       // } else {
@@ -96,9 +105,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
               ),
               Center(
-                child: Image.asset(
-                    //widget.product.productImage,
-                    'assets/images/breakfast-quinoa.png'),
+                child: Image.network(
+                  widget.product.productImage,
+                  height: MediaQuery.of(context).size.height / 6,
+                ),
               ),
               Expanded(
                 child: Container(
@@ -170,17 +180,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             const SizedBox(
                               width: 120,
                             ),
-                            const Text(
-                              '\$2,000',
-                              style: TextStyle(
+                            Text(
+                              '\$$totalAmount',
+                              style: const TextStyle(
                                   fontSize: 24, color: Color(0xff27214D)),
                             ),
                           ],
                         ),
                         const Divider(),
                         const SizedBox(height: 15),
+
                         const Text(
-                          'One Pack Contains:',
+                          'Product Description:',
                           style: TextStyle(
                             fontSize: 20,
                           ),
@@ -194,25 +205,28 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         const SizedBox(
                           height: 15,
                         ),
-                        Text(
-                          widget.product.description,
-                          style: const TextStyle(
-                            fontSize: 18,
+                        SingleChildScrollView(
+                          child: Text(
+                            widget.product.description,
+                            style: const TextStyle(
+                              fontSize: 18,
+                            ),
                           ),
                         ),
-                        const Divider(
-                          height: 50,
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        const Text(
-                          'If you are looking for a new fruit salad to eat today, quinoa is the perfect brunch for you. ',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Color(0xff000000),
-                          ),
-                        ),
+
+                        // const Divider(
+                        //   height: 50,
+                        // ),
+                        // const SizedBox(
+                        //   height: 8,
+                        // ),
+                        // const Text(
+                        //   'If you are looking for a new fruit salad to eat today, quinoa is the perfect brunch for you. ',
+                        //   style: TextStyle(
+                        //     fontSize: 15,
+                        //     color: Color(0xff000000),
+                        //   ),
+                        // ),
                         Expanded(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -239,8 +253,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 onTap: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          const MyBasketScreen(),
+                                      builder: (context) => MyBasketScreen(
+                                          voidCallback: basket.addItemToBasket(
+                                              id: widget.product.id,
+                                              price: widget.product.price,
+                                              product:
+                                                  widget.product.productName)),
                                     ),
                                   );
                                 },

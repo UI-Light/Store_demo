@@ -91,14 +91,17 @@ class _ComboGridState extends State<ComboGrid> {
             ),
           ),
           Center(
-            child: Image.asset(widget.product.productImage),
+            child: Image.network(
+              widget.product.productImage,
+              height: MediaQuery.of(context).size.height / 14,
+            ),
           ),
-          FittedBox(
-            child: Text(
-              widget.product.productName,
-              style: const TextStyle(
-                fontSize: 16,
-              ),
+          Text(
+            widget.product.productName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 16,
             ),
           ),
           const SizedBox(height: 2),

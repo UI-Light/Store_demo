@@ -76,11 +76,17 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         Column(
                           children: [
                             GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        const MyBasketScreen()));
-                              },
+                              // onTap: () {
+                              //   Navigator.of(context).push(MaterialPageRoute(
+                              //       builder: (context) => MyBasketScreen(
+                              //         voidCallback:
+                              //         basket.addItemToBasket(
+                              //                 id: widget.product.id,
+                              //                 price: widget.product.price,
+                              //                 product:
+                              //                     widget.product.productName) ,
+                              //       )));
+                              // },
                               child: Image.asset(
                                 'assets/images/mybasket.png',
                               ),
@@ -201,12 +207,13 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) => GestureDetector(
                           onTap: () {
-                            for (var prod in products) {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    ProductDetailScreen(product: prod),
-                              ));
-                            }
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ProductDetailScreen(
+                                  product: products[index],
+                                ),
+                              ),
+                            );
                           },
                           child: ProductGrid(
                             product: products[index],

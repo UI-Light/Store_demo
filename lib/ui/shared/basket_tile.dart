@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 
 class BasketTile extends StatefulWidget {
-  const BasketTile({Key? key}) : super(key: key);
+  final String id;
+  final double price;
+  final int quantity;
+  final String productName;
+  const BasketTile(
+      {Key? key,
+      required this.id,
+      required this.price,
+      required this.quantity,
+      required this.productName})
+      : super(key: key);
 
   @override
   State<BasketTile> createState() => _BasketTileState();
 }
 
 class _BasketTileState extends State<BasketTile> {
+  // Basket basket = Basket();
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -19,10 +30,10 @@ class _BasketTileState extends State<BasketTile> {
           color: const Color(0xffFFF2E7),
           borderRadius: BorderRadius.circular(16),
         ),
-        child: Image.asset('assets/images/breakfast-quinoa.png'),
+        child: Image.network('assets/images/breakfast-quinoa.png'),
       ),
-      title: const Text(
-        'Quinao Fruit Salad',
+      title: Text(
+        widget.productName,
         style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
 
         //textAlign: TextAlign.left,
@@ -40,8 +51,8 @@ class _BasketTileState extends State<BasketTile> {
           const SizedBox(
             width: 8,
           ),
-          const Text(
-            '1',
+          Text(
+            widget.quantity.toString(),
             style: TextStyle(fontSize: 14, color: Color(0xff27214D)),
           ),
           const SizedBox(
@@ -69,8 +80,8 @@ class _BasketTileState extends State<BasketTile> {
           ),
         ],
       ),
-      trailing: const Text(
-        '\$20,000',
+      trailing: Text(
+        '\$${widget.price}'.toString(),
         style: TextStyle(fontSize: 16, color: Color(0xff27214D)),
       ),
     );

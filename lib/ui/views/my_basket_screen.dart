@@ -1,18 +1,24 @@
 // ignore_for_file: unused_import, unnecessary_const
 
 import 'package:flutter/material.dart';
+import 'package:store_demo/models/basket.dart';
+import 'package:store_demo/models/basket_item.dart';
 import 'package:store_demo/ui/shared/basket_tile.dart';
 import 'package:store_demo/ui/shared/checkout_bottom_sheet.dart';
 import 'package:store_demo/ui/views/my_basket_screen.dart';
 
 class MyBasketScreen extends StatefulWidget {
-  const MyBasketScreen({Key? key}) : super(key: key);
+  final Function voidCallback;
+  const MyBasketScreen({Key? key, required this.voidCallback})
+      : super(key: key);
 
   @override
   State<MyBasketScreen> createState() => _MyBasketScreenState();
 }
 
 class _MyBasketScreenState extends State<MyBasketScreen> {
+  Basket basket = Basket();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -74,12 +80,14 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                 child: Padding(
                   padding:
                       const EdgeInsets.only(top: 20.0, right: 10.0, left: 10.0),
-                  child: ListView(
-                    children: const [
-                      BasketTile(),
-                      BasketTile(),
-                      BasketTile(),
-                    ],
+                  child: ListView.builder(
+                    itemCount: basket.items.length,
+                    itemBuilder: (context, index) => BasketTile(
+                      id: basket.items[index]!.id.toString(),
+                      price: basket.items[index]!.price,
+                      productName: basket.items[index]!.item,
+                      quantity: basket.items[index]!.quantity,
+                    ),
                   ),
                 ),
               ),
@@ -92,16 +100,16 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         'Total',
                         style: TextStyle(
                           fontSize: 16,
                         ),
                       ),
                       Text(
-                        '\$60,000',
-                        style: TextStyle(
+                        basket.totalAmount().toString(),
+                        style: const TextStyle(
                           fontSize: 24,
                         ),
                       )
