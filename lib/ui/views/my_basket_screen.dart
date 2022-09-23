@@ -1,23 +1,63 @@
 // ignore_for_file: unused_import, unnecessary_const
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:store_demo/models/basket.dart';
-import 'package:store_demo/models/basket_item.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:store_demo/data/http_service.dart';
+import 'package:store_demo/models/cart.dart';
+import 'package:store_demo/models/product.dart';
+import 'package:store_demo/models/product_info.dart';
+import 'package:store_demo/models/products_in_cart.dart';
 import 'package:store_demo/ui/shared/basket_tile.dart';
 import 'package:store_demo/ui/shared/checkout_bottom_sheet.dart';
 import 'package:store_demo/ui/views/my_basket_screen.dart';
 
 class MyBasketScreen extends StatefulWidget {
-  final Function voidCallback;
-  const MyBasketScreen({Key? key, required this.voidCallback})
-      : super(key: key);
+  const MyBasketScreen({Key? key}) : super(key: key);
 
   @override
   State<MyBasketScreen> createState() => _MyBasketScreenState();
 }
 
 class _MyBasketScreenState extends State<MyBasketScreen> {
-  Basket basket = Basket();
+  List<dynamic> products = [];
+  HttpService httpService = HttpService();
+  double totalPrice = 0;
+  FlutterSecureStorage storage = const FlutterSecureStorage();
+
+  void showBasketItems() async {
+    String? prod = await storage.read(key: 'cartProducts');
+    print('prodb==$prod');
+    products = jsonDecode(prod!);
+    setState(() {});
+
+    print('BasketPageproducts =$products');
+  }
+
+  void deleteBasketItem(int id) async {
+    products.removeWhere((element) => element["id"] == id);
+    storage.write(key: 'cartProducts', value: jsonEncode(products));
+    print('cart after deletion $products');
+    setState(() {});
+  }
+
+  void getTotalPrice() async {
+    await storage.read(key: 'cartProducts');
+    products.forEach((element) {
+      setState(() {
+        totalPrice += element["price"];
+      });
+    });
+    print(totalPrice);
+  }
+
+  @override
+  void initState() {
+    showBasketItems();
+    getTotalPrice();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,12 +121,10 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                   padding:
                       const EdgeInsets.only(top: 20.0, right: 10.0, left: 10.0),
                   child: ListView.builder(
-                    itemCount: basket.items.length,
+                    itemCount: products.length,
                     itemBuilder: (context, index) => BasketTile(
-                      id: basket.items[index]!.id.toString(),
-                      price: basket.items[index]!.price,
-                      productName: basket.items[index]!.item,
-                      quantity: basket.items[index]!.quantity,
+                      product: products[index],
+                      deleteItem: deleteBasketItem,
                     ),
                   ),
                 ),
@@ -108,7 +146,7 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                         ),
                       ),
                       Text(
-                        basket.totalAmount().toString(),
+                        totalPrice.toString(),
                         style: const TextStyle(
                           fontSize: 24,
                         ),
@@ -121,7 +159,9 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                           context: context,
                           backgroundColor: Colors.transparent,
                           builder: (context) {
-                            return const CheckoutBottomSheet();
+                            return CheckoutBottomSheet(
+                              totalAmount: totalPrice.toInt(),
+                            );
                           });
                     },
                     child: Container(

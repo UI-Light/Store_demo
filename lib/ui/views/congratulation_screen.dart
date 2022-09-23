@@ -13,10 +13,11 @@ class CongratulationScreen extends StatefulWidget {
 class _CongratulationScreenState extends State<CongratulationScreen> {
   late String jwt;
   final storage = const FlutterSecureStorage();
-  Future get jwtOrEmpty async {
+  Future jwtOrEmpty() async {
     var jwt = await storage.read(key: "jwt");
-    if (jwt == null) return "";
-    return jwt;
+    print('jwt=== $jwt');
+    if (jwt == null) return "Cannot continue";
+    return jwt = jwt;
   }
 
   @override
@@ -85,8 +86,9 @@ class _CongratulationScreenState extends State<CongratulationScreen> {
             const SizedBox(height: 30),
             GestureDetector(
               onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => ProductsScreen.fromBase64(jwt)));
+                // jwtOrEmpty();
+                // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                //     builder: (context) => ProductsScreen.fromBase64(jwt)));
               },
               child: Container(
                 height: MediaQuery.of(context).size.height / 12,

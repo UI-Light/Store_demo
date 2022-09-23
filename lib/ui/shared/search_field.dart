@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:store_demo/models/product.dart';
+import 'package:store_demo/ui/views/search_screen.dart';
 
-class SearchField extends StatelessWidget {
-  const SearchField({Key? key}) : super(key: key);
+class SearchField extends StatefulWidget {
+  final List<Product> products;
+  const SearchField({Key? key, required this.products}) : super(key: key);
+
+  @override
+  State<SearchField> createState() => _SearchFieldState();
+}
+
+class _SearchFieldState extends State<SearchField> {
+  TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +26,16 @@ class SearchField extends StatelessWidget {
             color: const Color(0xffF3F4F9),
           ),
           child: TextFormField(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => SearchScreen(
+                        products: widget.products,
+                      )));
+            },
+            controller: searchController,
             cursorColor: Theme.of(context).primaryColor,
             decoration: const InputDecoration(
-              hintText: 'Search for fruit salad combos',
+              hintText: 'Search for products',
               hintStyle: TextStyle(
                 fontSize: 15,
                 color: Color(0xff86869E),

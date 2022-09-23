@@ -2,15 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:store_demo/models/product.dart';
 
 class ComboGrid extends StatefulWidget {
-  // final String productName;
-  // final String productImage;
-  // final int price;
-  // const ComboGrid({
-  //   Key? key,
-  //   required this.productName,
-  //   required this.productImage,
-  //   required this.price,
-  // }) : super(key: key);
 
   final Product product;
   const ComboGrid({
@@ -34,6 +25,7 @@ class _ComboGridState extends State<ComboGrid> {
   void toggleIsFav() {
     setState(() {
       _isFav = !_isFav;
+      widget.product.isFavourite = true;
     });
   }
 

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:store_demo/models/products_in_cart.dart';
 import 'package:store_demo/ui/shared/textfield.dart';
 import 'package:store_demo/data/http_service.dart';
 import 'package:store_demo/ui/views/products_screen.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'dart:convert' show base64, jsonEncode;
 
 class AuthenticationScreen extends StatefulWidget {
   const AuthenticationScreen({Key? key}) : super(key: key);
@@ -85,11 +88,24 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                           var username = usernameController.text;
                           var password = passwordController.text;
 
+                          print('username = $username');
+                          print('password = $password');
+
                           var jwt = await httpService.login(username, password);
+                          print(jwt);
+                          if (jwt != 'failed') {
+                            Map<String, dynamic> decodedToken =
+                                JwtDecoder.decode(jwt);
+                            print("userid: " + decodedToken.toString());
+                            String uiD = decodedToken["sub"].toString();
+                            String user = decodedToken["user"].toString();
 
-                          if (jwt != null) {
                             storage.write(key: "jwt", value: jwt);
-
+                            storage.write(key: "uiD", value: uiD);
+                            storage.write(key: "user", value: user);
+                            List<ProductsInCart> cartProducts = [];
+                            String json = jsonEncode(cartProducts);
+                            storage.write(key: "cartProducts", value: json);
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (context) =>

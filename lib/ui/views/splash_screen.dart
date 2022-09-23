@@ -164,7 +164,7 @@ class _SplashScreenState extends State<SplashScreen>
                       )),
                   child: Center(
                     child: Text(
-                      'Fruit Hub',
+                      'Store Hub',
                       style: GoogleFonts.badScript(
                         fontSize: 24,
                         color: Theme.of(context).colorScheme.onPrimary,

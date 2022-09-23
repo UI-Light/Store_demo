@@ -7,7 +7,9 @@ import 'package:store_demo/ui/views/congratulation_screen.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
 
 class CheckoutBottomSheet extends StatefulWidget {
-  const CheckoutBottomSheet({Key? key}) : super(key: key);
+  final int totalAmount;
+  const CheckoutBottomSheet({Key? key, required this.totalAmount})
+      : super(key: key);
 
   @override
   State<CheckoutBottomSheet> createState() => _CheckoutBottomSheetState();
@@ -43,7 +45,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
   //async method to charge users card and return a response
   chargeCard() async {
     var charge = Charge()
-      ..amount = 1000 *
+      ..amount = widget.totalAmount *
           100 //the money should be in kobo hence the need to multiply the value by 100
       ..reference = _getReference()
       ..putCustomField('custom_id',

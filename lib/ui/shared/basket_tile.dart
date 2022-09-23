@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:store_demo/models/products_in_cart.dart';
 
 class BasketTile extends StatefulWidget {
-  final String id;
-  final double price;
-  final int quantity;
-  final String productName;
-  const BasketTile(
-      {Key? key,
-      required this.id,
-      required this.price,
-      required this.quantity,
-      required this.productName})
+  final product;
+  void Function(int) deleteItem;
+  BasketTile({Key? key, required this.product, required this.deleteItem})
       : super(key: key);
 
   @override
@@ -18,7 +12,6 @@ class BasketTile extends StatefulWidget {
 }
 
 class _BasketTileState extends State<BasketTile> {
-  // Basket basket = Basket();
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -30,59 +23,37 @@ class _BasketTileState extends State<BasketTile> {
           color: const Color(0xffFFF2E7),
           borderRadius: BorderRadius.circular(16),
         ),
-        child: Image.network('assets/images/breakfast-quinoa.png'),
+        child: Image.network(widget.product["productImage"]!),
       ),
       title: Text(
-        widget.productName,
-        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        widget.product["productName"]!,
+        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
 
         //textAlign: TextAlign.left,
       ),
       subtitle: Row(
         children: [
-          Center(
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.remove_circle_outline),
-              color: const Color(0xff333333),
-              iconSize: 16,
-            ),
-          ),
-          const SizedBox(
-            width: 8,
-          ),
           Text(
-            widget.quantity.toString(),
-            style: TextStyle(fontSize: 14, color: Color(0xff27214D)),
+            widget.product["quantity"]!.toString(),
+            style: const TextStyle(fontSize: 14),
           ),
-          const SizedBox(
-            width: 12,
+          SizedBox(
+            width: 30,
           ),
-
-          //TODO: Fix icon Size
-          Container(
-            height: 24,
-            width: 25,
-            decoration: BoxDecoration(
-              color: const Color(0xffFFF2E7),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Center(
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.add,
-                ),
-                color: Theme.of(context).primaryColor,
-                iconSize: 12,
-              ),
+          IconButton(
+            onPressed: () {
+              widget.deleteItem(widget.product["id"]!);
+            },
+            icon: Icon(
+              Icons.delete,
+              color: Theme.of(context).primaryColor,
             ),
           ),
         ],
       ),
       trailing: Text(
-        '\$${widget.price}'.toString(),
-        style: TextStyle(fontSize: 16, color: Color(0xff27214D)),
+        '\$${widget.product["price"]}'.toString(),
+        style: const TextStyle(fontSize: 16, color: Color(0xff27214D)),
       ),
     );
   }

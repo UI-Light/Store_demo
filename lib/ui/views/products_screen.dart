@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:store_demo/data/http_service.dart';
 import 'package:store_demo/models/product.dart';
 import 'package:store_demo/ui/shared/combo_grid.dart';
@@ -34,9 +35,12 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
+  FlutterSecureStorage storage = const FlutterSecureStorage();
   List<Product> products = [];
+
   HttpService httpService = HttpService();
   bool isLoading = true;
+  String? username = "";
 
   void loadProducts() async {
     var result = await httpService.fetchProducts();
@@ -48,9 +52,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
     );
   }
 
+  void getUsername() async {
+    username = await storage.read(key: "user");
+    print(username);
+    setState(() {});
+  }
+
   @override
   void initState() {
     loadProducts();
+    getUsername();
     super.initState();
   }
 
@@ -58,6 +69,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         body: isLoading
             ? const Center(
                 child: CircularProgressIndicator(
@@ -73,68 +85,61 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Icon(Icons.menu),
-                        Column(
-                          children: [
-                            GestureDetector(
-                              // onTap: () {
-                              //   Navigator.of(context).push(MaterialPageRoute(
-                              //       builder: (context) => MyBasketScreen(
-                              //         voidCallback:
-                              //         basket.addItemToBasket(
-                              //                 id: widget.product.id,
-                              //                 price: widget.product.price,
-                              //                 product:
-                              //                     widget.product.productName) ,
-                              //       )));
-                              // },
-                              child: Image.asset(
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => MyBasketScreen()));
+                          },
+                          child: Column(
+                            children: [
+                              Image.asset(
                                 'assets/images/mybasket.png',
                               ),
-                            ),
-                            const Text('My basket'),
-                          ],
+                              const Text('My basket'),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 30),
                     Row(
-                      children: const [
+                      children: [
                         Text(
-                          'Hello Tony, ',
-                          style: TextStyle(
+                          'Hello $username, ',
+                          style: const TextStyle(
                             fontSize: 20,
                           ),
                         ),
-                        Text(
-                          'What fruit salad ',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        )
+                        // const Text(
+                        //   'what products ',
+                        //   style: TextStyle(
+                        //     fontSize: 20,
+                        //     fontWeight: FontWeight.w500,
+                        //   ),
+                        // )
                       ],
                     ),
-                    const Text(
-                      'combo do you want today?',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                    // const Text(
+                    //   ' do you want today?',
+                    //   style: TextStyle(
+                    //     fontSize: 20,
+                    //     fontWeight: FontWeight.w500,
+                    //   ),
+                    // ),
                     const SizedBox(height: 25),
-                    const SearchField(),
+                    SearchField(
+                      products: products,
+                    ),
                     const SizedBox(height: 20),
                     const Text(
                       'Recommended Combo',
                       style: TextStyle(
                         fontSize: 24,
-                        //fontWeight: FontWeight.w500,
                       ),
                     ),
                     const SizedBox(height: 20),
                     Expanded(
                       child: ListView.builder(
-                        // padding: const EdgeInsets.only(right: 8),
                         scrollDirection: Axis.horizontal,
                         itemCount: products.length,
                         itemBuilder: (context, index) => GestureDetector(

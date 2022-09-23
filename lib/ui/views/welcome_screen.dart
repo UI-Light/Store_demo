@@ -36,7 +36,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Get The Freshest Fruit Salad Combo',
+                    'Get High Quality Goods',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
@@ -44,7 +44,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                   const SizedBox(height: 20),
                   const Text(
-                    'We deliver the best and freshest fruit salad in town. Order for a combo today!!!',
+                    'We deliver high quality products. Order a product today!',
                     style: TextStyle(
                       fontSize: 17,
                       color: Color(0xff5D577E),

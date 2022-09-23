@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:store_demo/models/basket.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:intl/intl.dart';
+import 'package:store_demo/data/http_service.dart';
 import 'package:store_demo/models/product.dart';
+import 'package:store_demo/models/products_in_cart.dart';
 import 'package:store_demo/ui/views/my_basket_screen.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -16,10 +19,13 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
-  Basket basket = Basket();
+  List<Product> productInCart = [];
+
+  FlutterSecureStorage storage = const FlutterSecureStorage();
+  HttpService httpService = HttpService();
 
   bool _isFav = false;
-  int _counter = 0;
+  int _counter = 1;
 
   late int _price;
   double totalAmount = 0.0;
@@ -37,21 +43,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   void incrementCounter() {
     setState(() {
       _counter++;
-
-      totalAmount = basket.totalAmount();
-
-      // if (_counter == 0 || _counter == 1) {
-      //   _price = productPrice;
-      // } else {
-      //   _price = productPrice * _counter;
-      // }
     });
   }
 
   void decrementCounter() {
-    if (_counter == 0) {
+    if (_counter == 1) {
       setState(() {
-        _counter = 0;
+        _counter = 1;
       });
     } else {
       setState(() {
@@ -60,6 +58,73 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     }
   }
 
+  void addToBasket(Product product) async {
+    print('product:${widget.product.id}');
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+    var result = await httpService.addToCart(
+        dateFormat.format(DateTime.now()),
+        [
+          {"productId": widget.product.id, "quantity": counter}
+        ].toString());
+
+    print('result = $result');
+    if (result == 'failed') {
+      print('Could not add to cart');
+    } else {
+      String? prod = await storage.read(key: 'cartProducts');
+      print('This is the product=$prod');
+
+      if (jsonDecode(prod!).length == 0) {
+        addProduct(product);
+      } else {
+        // List<ProductsInCart> latestCartProduct = [];
+        print('prodb==$prod');
+        List<dynamic> latestCartProduct = jsonDecode(prod!);
+        print('This is a dynamicList $latestCartProduct');
+        print('products =$latestCartProduct');
+        latestCartProduct.forEach((element) async {
+          if (element["id"] == product.id) {
+            element["quantity"] = element["quantity"]! + 1;
+            element["price"] = element["price"]! * element["quantity"]!;
+            setState(() {});
+            String json = jsonEncode(latestCartProduct);
+            print('JSON= $json');
+            await storage.write(key: "cartProducts", value: json);
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const MyBasketScreen(),
+            ));
+          } else {
+            addProduct(product);
+          }
+        });
+      }
+    }
+    setState(() {
+      productInCart.add(product);
+    });
+  }
+
+  void addProduct(Product product) async {
+    String? prod = await storage.read(key: 'cartProducts');
+    List<dynamic> latestCartProduct = jsonDecode(prod!);
+    ProductsInCart products = ProductsInCart();
+    products.price = product.price;
+    products.productName = product.productName;
+    products.productImage = product.productImage;
+    products.category = product.category;
+    products.quantity = counter;
+    products.description = product.description;
+    products.id = product.id;
+    latestCartProduct.add(products);
+    print('latest==$latestCartProduct');
+    setState(() {});
+    String json = jsonEncode(latestCartProduct);
+    print('Encode json= $json');
+    await storage.write(key: "cartProducts", value: json);
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const MyBasketScreen(),
+    ));
+  }
   // void changePrice(int productPrice) {
   //   if (_counter == 0 || _counter == 1) {
   //     setState(() {
@@ -181,7 +246,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               width: 120,
                             ),
                             Text(
-                              '\$$totalAmount',
+                              '\$${widget.product.price}',
                               style: const TextStyle(
                                   fontSize: 24, color: Color(0xff27214D)),
                             ),
@@ -189,7 +254,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                         const Divider(),
                         const SizedBox(height: 15),
-
                         const Text(
                           'Product Description:',
                           style: TextStyle(
@@ -213,20 +277,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ),
                           ),
                         ),
-
-                        // const Divider(
-                        //   height: 50,
-                        // ),
-                        // const SizedBox(
-                        //   height: 8,
-                        // ),
-                        // const Text(
-                        //   'If you are looking for a new fruit salad to eat today, quinoa is the perfect brunch for you. ',
-                        //   style: TextStyle(
-                        //     fontSize: 15,
-                        //     color: Color(0xff000000),
-                        //   ),
-                        // ),
                         Expanded(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -241,9 +291,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 child: Center(
                                   child: IconButton(
                                     onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.favorite_border,
-                                    ),
+                                    icon: widget.product.isFavourite
+                                        ? const Icon(Icons.favorite)
+                                        : const Icon(
+                                            Icons.favorite_border,
+                                          ),
                                     color: Theme.of(context).primaryColor,
                                     iconSize: 24,
                                   ),
@@ -251,16 +303,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => MyBasketScreen(
-                                          voidCallback: basket.addItemToBasket(
-                                              id: widget.product.id,
-                                              price: widget.product.price,
-                                              product:
-                                                  widget.product.productName)),
-                                    ),
+                                  print(widget.product.toString());
+                                  addToBasket(
+                                    widget.product,
                                   );
+
+                                  // Navigator.of(context).push(
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => MyBasketScreen(
+                                  //       products: productInCart,
+                                  //     ),
+                                  //   ),
+                                  // );
                                 },
                                 child: Container(
                                   height:
