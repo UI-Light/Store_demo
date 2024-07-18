@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color(0xffFFA451),
         fontFamily: 'BrandonGrotesque',
         textTheme: const TextTheme(
-          bodyText2: TextStyle(color: Color(0xff27214D)),
+          bodyMedium: TextStyle(color: Color(0xff27214D)),
         ),
       ),
       home: const SplashScreen(),

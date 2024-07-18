@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
-    vector4Animation = Tween<double>(begin: -150, end: 180.0).animate(
+    vector4Animation = Tween<double>(begin: -250, end: 180.0).animate(
       CurvedAnimation(
         parent: controller,
         curve: const Interval(
@@ -71,7 +71,7 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
-    vector5Animation = Tween<double>(begin: -150.0, end: 180.0).animate(
+    vector5Animation = Tween<double>(begin: -250.0, end: 180.0).animate(
       CurvedAnimation(
         parent: controller,
         curve: const Interval(
