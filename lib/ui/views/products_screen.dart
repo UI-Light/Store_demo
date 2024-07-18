@@ -110,22 +110,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             fontSize: 20,
                           ),
                         ),
-                        // const Text(
-                        //   'what products ',
-                        //   style: TextStyle(
-                        //     fontSize: 20,
-                        //     fontWeight: FontWeight.w500,
-                        //   ),
-                        // )
                       ],
                     ),
-                    // const Text(
-                    //   ' do you want today?',
-                    //   style: TextStyle(
-                    //     fontSize: 20,
-                    //     fontWeight: FontWeight.w500,
-                    //   ),
-                    // ),
                     const SizedBox(height: 25),
                     SearchField(
                       products: products,

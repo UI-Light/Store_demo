@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(seconds: 5),
     );
 
-    vector1Animation = Tween<double>(begin: 0.0, end: 300.0).animate(
+    vector1Animation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: controller,
         curve: const Interval(
@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
-    vector4Animation = Tween<double>(begin: -250, end: 180.0).animate(
+    vector4Animation = Tween<double>(begin: -1, end: 1).animate(
       CurvedAnimation(
         parent: controller,
         curve: const Interval(
@@ -71,7 +71,7 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
-    vector5Animation = Tween<double>(begin: -250.0, end: 180.0).animate(
+    vector5Animation = Tween<double>(begin: -1, end: 1).animate(
       CurvedAnimation(
         parent: controller,
         curve: const Interval(
@@ -82,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
-    rectangleAnimation = Tween<double>(begin: -100.0, end: 260.0).animate(
+    rectangleAnimation = Tween<double>(begin: -1, end: 1).animate(
       CurvedAnimation(
         parent: controller,
         curve: const Interval(
@@ -93,17 +93,18 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
-    Future.delayed(
-      const Duration(seconds: 0),
-    ).then(
-      (value) => controller.forward().whenComplete(
-            () => Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => const WelcomeScreen(),
-              ),
-            ),
-          ),
-    );
+    // Future.delayed(
+    //   const Duration(seconds: 0),
+    // ).then(
+    //   (value) => controller.forward().whenComplete(
+    //         () => Navigator.of(context).pushReplacement(
+    //           MaterialPageRoute(
+    //             builder: (context) => const WelcomeScreen(),
+    //           ),
+    //         ),
+    //       ),
+    // );
+    controller.forward();
   }
 
   @override
@@ -114,6 +115,10 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    print ('height: ${MediaQuery.of(context).size.height}');
+    print ('width: ${MediaQuery.of(context).size.width}');
+     print ('size: ${MediaQuery.of(context).size}');
     return Scaffold(
       body: Center(
         child: AnimatedBuilder(
@@ -121,7 +126,7 @@ class _SplashScreenState extends State<SplashScreen>
           builder: (context, child) => Stack(
             children: <Widget>[
               Positioned(
-                top: vector1Animation.value,
+                top: vector1Animation.value * height * 0.37,
                 left: 40.0,
                 right: 40.0,
                 child: Image.asset('assets/images/Vector-1.png'),
@@ -135,24 +140,24 @@ class _SplashScreenState extends State<SplashScreen>
               Positioned(
                 top: 240.0,
                 left: vector3Animation.value,
-                right: 120, //vector3Animation.value,
+                right: 120, 
 
                 child: Image.asset('assets/images/Vector-3.png'),
               ),
               Positioned(
-                top: vector4Animation.value,
+                top: vector4Animation.value * height * 0.22,
                 left: 50.0,
                 right: 25.0,
                 child: Image.asset('assets/images/Vector-4.png'),
               ),
               Positioned(
-                top: vector5Animation.value, //180.0,
+                top: vector5Animation.value * height * 0.22,
                 left: 40.0,
                 right: 85.0,
                 child: Image.asset('assets/images/Vector-5.png'),
               ),
               Positioned(
-                bottom: rectangleAnimation.value, //260.0,
+                bottom: rectangleAnimation.value * height * 0.37,
                 left: 70.0,
                 right: 70.0,
                 child: Container(
