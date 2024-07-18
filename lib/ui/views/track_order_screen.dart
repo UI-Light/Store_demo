@@ -36,7 +36,7 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Row(children: const [
+                      child: const Row(children: [
                         Icon(Icons.arrow_back),
                         Text(
                           'Go back',

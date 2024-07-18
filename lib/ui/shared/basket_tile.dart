@@ -3,8 +3,8 @@ import 'package:store_demo/models/products_in_cart.dart';
 
 class BasketTile extends StatefulWidget {
   final product;
-  void Function(int) deleteItem;
-  BasketTile({Key? key, required this.product, required this.deleteItem})
+  final void Function(int) deleteItem;
+  const BasketTile({Key? key, required this.product, required this.deleteItem})
       : super(key: key);
 
   @override
@@ -37,7 +37,7 @@ class _BasketTileState extends State<BasketTile> {
             widget.product["quantity"]!.toString(),
             style: const TextStyle(fontSize: 14),
           ),
-          SizedBox(
+          const SizedBox(
             width: 30,
           ),
           IconButton(

@@ -88,7 +88,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => MyBasketScreen()));
+                                builder: (context) => const MyBasketScreen()));
                           },
                           child: Column(
                             children: [

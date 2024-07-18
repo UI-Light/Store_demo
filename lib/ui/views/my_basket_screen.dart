@@ -86,7 +86,7 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Row(children: const [
+                      child: const Row(children: [
                         Icon(Icons.arrow_back),
                         Text(
                           'Go back',
